@@ -1,0 +1,12 @@
+h3 {
+    font-weight: 700;
+}
+
+.horizontal-line {
+    border-top: black solid;
+}
+
+
+.grad {
+    background-image: linear-gradient(to right, rgba(0, 0, 255, 0.755) , rgba(4, 4, 75, 0.424)); 
+}
