@@ -16,14 +16,22 @@ var searchHandler = function (event) {
 
         // weatherContainer.textContent = '';
         // cityInputEl.value = '';
+
+
+        var cityListItemEl = document.createElement('button')
+        cityListItemEl.textContent = cityEntered;
+        cityPicked.appendChild(cityListItemEl);
+
+
+
     }
 
-    var cityListItemEl = document.createElement('button')
-    cityListItemEl.textContent = cityEntered;
-
-    cityPicked.appendChild = cityListItemEl;
+    // var cityListItemEl = document.createElement('button')
+    // cityListItemEl.textContent = cityEntered;
 
 };
+
+
 
 var getCityWeather = function (city) {
 
@@ -36,9 +44,9 @@ var getCityWeather = function (city) {
             response.json().then(function (data) {
                 console.log(data);
             });
-        }
-    
+        }   
 })
+
 };
 
 
