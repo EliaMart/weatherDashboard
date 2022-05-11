@@ -38,7 +38,7 @@ var getCityWeather = function (city) {
     fetch(apiURL)
         .then(function (response) {
             if (response.ok) {
-                console.log(response);
+                console.log(response.body);
                 return response.json()
             }}) .then(function (data) {
                 console.log(data);
