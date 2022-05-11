@@ -33,7 +33,7 @@ var oneCall = 'https://api.openweathermap.org/data/2.5/onecall?'
 
 var getCityWeather = function (city) {
 
-    var apiURL = 'https://api.openweathermap.org/geo/1.0/direct?q='+ city + '&appid=4fde54c156119a215dce015fbaeecce2&units=imperial'
+    var apiURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=4fde54c156119a215dce015fbaeecce2&units=imperial&limit=5'
 
     fetch(apiURL)
         .then(function (response) {
@@ -50,8 +50,8 @@ var getCityWeather = function (city) {
                 // var humidity = main.humidity;
                 // var windSpeed = data.wind.speed;
                 // var icon = data.weather[0].icon
-                var lat = data.lat;
-                var lon = data.lon;
+                var lat = data.coord.lat;
+                var lon = data.coord.lon;
                 var getUv = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=4fde54c156119a215dce015fbaeecce2'
                 fetch(getUv).then(function(response){
                 console.log(response)
