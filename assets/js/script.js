@@ -27,29 +27,43 @@ var searchHandler = function (event) {
 };
 
 var latLon = 'https://api.openweathermap.org/geo/1.0/direct?q='
-// var cityurl = https://api.openweathermap.org/data/2.5/forecast?q='
 var oneCall = 'https://api.openweathermap.org/data/2.5/onecall?'
+ var weather = 'https://api.openweathermap.org/data/2.5/weather?q=${city_name}&units=imperial&appid=${apiKey}'
 
 
 var getCityWeather = function (city) {
 
-    var cityCord = latLon + city + '&limit=5&appid=4fde54c156119a215dce015fbaeecce2&units=metric'
-    var cityURL = oneCall + city + '&limit=5&appid=4fde54c156119a215dce015fbaeecce2&units=metric'
+    var apiURL = 'https://api.openweathermap.org/geo/1.0/direct?q='+ city + '&appid=4fde54c156119a215dce015fbaeecce2&units=imperial'
 
-
-    fetch(cityCord)
+    fetch(apiURL)
         .then(function (response) {
             if (response.ok) {
                 console.log(response);
-                response.json()
-            
-
-                    .then(function (data) {
-                        console.log(data);
+                return response.json()
+            }}) .then(function (data) {
+                console.log(data);
+                
+                // var dailyWeatherContainer = document.querySelector("#one-container")
+                // var date = new Date().toLocaleDateString();
+                // var main = data.main;
+                // var temp = Math.floor(main.temp);
+                // var humidity = main.humidity;
+                // var windSpeed = data.wind.speed;
+                // var icon = data.weather[0].icon
+                var lat = data.lat;
+                var lon = data.lon;
+                var getUv = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=4fde54c156119a215dce015fbaeecce2'
+                fetch(getUv).then(function(response){
+                console.log(response)
+                response.json().then(function(data){
+                setUv = data.value
                     });
-            }
+            })
         })
 };
+      
+
+
 
 
 
