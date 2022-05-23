@@ -10,3 +10,7 @@ h3 {
 .grad {
     background-image: linear-gradient(to right, rgba(0, 0, 255, 0.755) , rgba(4, 4, 75, 0.424)); 
 }
+
+#UVIndex {
+    width: 175px;
+}
