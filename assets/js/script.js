@@ -102,25 +102,25 @@ function displayCurrentWeather(data) {
     var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png"
     wicon.setAttribute('src', iconUrl);
     wicon.setAttribute('alt', iconDescription);
-    document.getElementById('current-icon'). innerText = iconUrl
+    document.getElementById('current-icon').textContent = iconUrl
 
 
-    document.querySelector('.card-title').innerHTML =  name + ' ' + date;
-    document.querySelector('.card-text-T').innerText = 'Temp: ' + temp + '\u00B0F'; 
-    document.querySelector('.card-text-W').innerText = 'Wind: ' + windSpeed + ' MPH';
-    document.querySelector('.card-text-H').innerText = 'Humidity: ' + humidity + '%';
-    document.querySelector('.card-text-U').textContent = 'UV Index: ' + UV;
+    document.querySelector('.card-title').textContent =  name + ' ' + date;
+    document.querySelector('.card-text-T').textContent = 'Temp: ' + temp + '\u00B0F'; 
+    document.querySelector('.card-text-W').textContent = 'Wind: ' + windSpeed + ' MPH';
+    document.querySelector('.card-text-H').textContent = 'Humidity: ' + humidity + '%';
+    document.getElementById('UVIndex').textContent = 'UV Index: ' + UV;
 
 
 
-    // if (UV <= 2 ) {
-    //     UVElement.setAttribute("class", "bg-success text-white");
+    if (UV <= 2 ) {
+        UVElement.setAttribute("class", "bg-success text-white");
 
-    //  }else if (UV > 3 && UV < 5) {        
-    //         UVElement.setAttribute("class", "bg-warning text-white")  
-    // } else {
-    //         UVElement.setAttribute("class", "bg-danger text-white")
-    // };
+     }else if (UV < 5) {        
+            UVElement.setAttribute("class", "bg-warning text-white")  
+    } else {
+            UVElement.setAttribute("class", "bg-danger text-white")
+    };
 
 
 };
