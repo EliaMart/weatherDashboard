@@ -4,8 +4,16 @@ var cityInputEl = document.querySelector('#city')
 var cityPicked = document.querySelector('#city-picked')
 var weatherContainer = document.querySelector('#weather-container')
 var UVElement = document.getElementById("UVIndex")
-let city = [ ]
+let city 
+let searchHistory = [];
 
+
+// function getStorage () {
+//     var storedHistory = localStorage.getItem('search');
+//     if (storedHistory) {
+//         searchHistory = JSON.parse(storedHistory);
+//     }
+// }
 
 function searchHandler (event) {
     event.preventDefault();
@@ -15,33 +23,35 @@ function searchHandler (event) {
 
     if (city) {
         getCityWeather(city);
+        searchHistory.push(city)
 
         cityInputEl.value = '';
 
-        var cityListItemEl = document.createElement('button')
-        cityListItemEl.textContent = city;
-        cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
-        cityListItemEl.setAttribute('style', "display: block")
-        cityPicked.appendChild(cityListItemEl);
+        renderSearch();
     }
+
+    localStorage.setItem('search', JSON.stringify(searchHistory));
 
 
 };
 
-// function renderSearch () {
-//     cityPicked.innerHTML = '';
+function renderSearch () {
 
-//     for (var i = 0; i < city; i++) {
-//         var cityListItemEl = document.createElement('button')
-//         cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
-//         cityListItemEl.setAttribute('style', "display: block")
+        var cityListItemEl = document.createElement('button')
+        cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
+        cityListItemEl.setAttribute('style', "display: block")
 
-//         cityListItemEl.setAttribute('data-city', city[i]);
-//         cityListItemEl.textContent = city[i];
-//         cityPicked.append(cityListItemEl);
-//     };
+    
+        cityListItemEl.setAttribute('data-city', city);
+        cityListItemEl.textContent = city;
+        cityPicked.append(cityListItemEl);
+        
+        cityListItemEl.addEventListener('click', getCityWeather(cityListItemEl.value))
 
-// };
+
+    };
+
+
 
 function getCityWeather () {
 
@@ -69,9 +79,7 @@ function getCityWeather () {
             })
 
         })
-
-    localStorage.setItem('city', JSON.stringify(city));
-    
+        // getStorage();
 };
       
 
