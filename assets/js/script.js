@@ -4,30 +4,22 @@ var cityInputEl = document.querySelector('#city')
 var cityPicked = document.querySelector('#city-picked')
 var weatherContainer = document.querySelector('#weather-container')
 var UVElement = document.getElementById("UVIndex")
-let city 
 let searchHistory = [];
 
-
-// function getStorage () {
-//     var storedHistory = localStorage.getItem('search');
-//     if (storedHistory) {
-//         searchHistory = JSON.parse(storedHistory);
-//     }
-// }
 
 function searchHandler (event) {
     event.preventDefault();
 
-    city = cityInputEl.value.trim();
+    let city = cityInputEl.value.trim();
     console.log(city);
 
     if (city) {
+        renderSearch(city);
         getCityWeather(city);
         searchHistory.push(city)
 
         cityInputEl.value = '';
 
-        renderSearch();
     }
 
     localStorage.setItem('search', JSON.stringify(searchHistory));
@@ -35,7 +27,7 @@ function searchHandler (event) {
 
 };
 
-function renderSearch () {
+function renderSearch (city) {
 
         var cityListItemEl = document.createElement('button')
         cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
@@ -46,14 +38,16 @@ function renderSearch () {
         cityListItemEl.textContent = city;
         cityPicked.append(cityListItemEl);
         
-        cityListItemEl.addEventListener('click', getCityWeather(cityListItemEl.value))
+        cityListItemEl.addEventListener('click', function() {
+            getCityWeather(cityListItemEl.textContent)
+        });
 
 
     };
 
 
 
-function getCityWeather () {
+function getCityWeather (city) {
 
     var apiURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=4fde54c156119a215dce015fbaeecce2&units=imperial'
 
@@ -73,20 +67,20 @@ function getCityWeather () {
                 console.log(response)
                 response.json().then(function(data){
                 console.log(data);
-                displayCurrentWeather(data);
+                displayCurrentWeather(data, city);
                 fiveDayForecast(data);
                     });
             })
 
         })
-        // getStorage();
+    
 };
       
 
 searchBtn.addEventListener('click', searchHandler);
 
 
-function displayCurrentWeather(data) {
+function displayCurrentWeather(data, city) {
 
     var name = city;
     console.log(name);
