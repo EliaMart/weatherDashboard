@@ -3,7 +3,8 @@ var searchBtn = document.querySelector('#searchBtn')
 var cityInputEl = document.querySelector('#city')
 var cityPicked = document.querySelector('#city-picked')
 var weatherContainer = document.querySelector('#weather-container')
-let city 
+var UVElement = document.getElementById("UVIndex")
+let city = [ ]
 
 
 function searchHandler (event) {
@@ -22,12 +23,25 @@ function searchHandler (event) {
         cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
         cityListItemEl.setAttribute('style', "display: block")
         cityPicked.appendChild(cityListItemEl);
-
     }
 
-    // localStorage.getItem(data);
 
 };
+
+// function renderSearch () {
+//     cityPicked.innerHTML = '';
+
+//     for (var i = 0; i < city; i++) {
+//         var cityListItemEl = document.createElement('button')
+//         cityListItemEl.classList.add('btn', 'btn-info', 'mt-3')
+//         cityListItemEl.setAttribute('style', "display: block")
+
+//         cityListItemEl.setAttribute('data-city', city[i]);
+//         cityListItemEl.textContent = city[i];
+//         cityPicked.append(cityListItemEl);
+//     };
+
+// };
 
 function getCityWeather () {
 
@@ -55,6 +69,9 @@ function getCityWeather () {
             })
 
         })
+
+    localStorage.setItem('city', JSON.stringify(city));
+    
 };
       
 
@@ -67,44 +84,39 @@ function displayCurrentWeather(data) {
     console.log(name);
     var date = new Date().toLocaleDateString();
     var temp = (data.current.temp);
-    console.log(temp);
     var humidity = data.current.humidity;
     var windSpeed = data.current.wind_speed;
     var icon = data.current.weather[0].icon
-    console.log(icon)
     var iconDescription = data.current.weather[0].description
     var UV = data.current.uvi;
+    var wicon = document.getElementById('current-icon')
 
     var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png"
+    wicon.setAttribute('src', iconUrl);
+    wicon.setAttribute('alt', iconDescription);
+    document.getElementById('current-icon'). innerText = iconUrl
 
 
-    document.querySelector('.card-title').innerText =  name + ' ' + date;
-    var currentIcon = document.createElement('img');
-    currentIcon.setAttribute('src', iconUrl);
-    currentIcon.setAttribute('alt', iconDescription);
-    document.getElementById('weather-icon').appendChild(currentIcon);
+    document.querySelector('.card-title').innerHTML =  name + ' ' + date;
     document.querySelector('.card-text-T').innerText = 'Temp: ' + temp + '\u00B0F'; 
     document.querySelector('.card-text-W').innerText = 'Wind: ' + windSpeed + ' MPH';
     document.querySelector('.card-text-H').innerText = 'Humidity: ' + humidity + '%';
-    document.querySelector('.card-text-U').innerText = 'UV Index: ' + UV;
+    document.querySelector('.card-text-U').textContent = 'UV Index: ' + UV;
 
 
 
-    if (UV <= 2 ) {
-        var UVElement = document.getElementById("UVIndex")
-        console.log(UVElement);
-        UVElement.setAttribute("class", "bg-success text-white");
+    // if (UV <= 2 ) {
+    //     UVElement.setAttribute("class", "bg-success text-white");
 
-     }else if (UV > 3 && UV < 5) {        
-            UVElement.setAttribute("class", "bg-warning text-white")  
-    } else {
-        UVElement.setAttribute("class", "bg-danger text-white")
-    };
+    //  }else if (UV > 3 && UV < 5) {        
+    //         UVElement.setAttribute("class", "bg-warning text-white")  
+    // } else {
+    //         UVElement.setAttribute("class", "bg-danger text-white")
+    // };
 
-
-    // localStorage.setItem(data);
 
 };
+
 
 function fiveDayForecast (data) {
     let test = data;
@@ -122,10 +134,12 @@ function fiveDayForecast (data) {
             fiveDate: new Date(data.daily[i].dt * 1000),
             fiveIcon: data.daily[i].weather[0].icon,
             fiveDescription: data.daily[i].weather.description,
+            
         }
 
         var iconFiveUrl = "https://openweathermap.org/img/w/" + fiveDayInfo.fiveIcon + ".png";
         var iconFiveDescription = fiveDayInfo.fiveDescription
+
 
 
         var fiveDayDate = document.createElement("p");
